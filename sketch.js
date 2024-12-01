@@ -14,21 +14,13 @@ const reqOptions = {
 
 const reqBody = {
   model: "gpt-4o-2024-08-06",
-  messages: [
-    {
-      role: "user",
-      content: [
-        {
-          type: "text",
-          text: "Describe the objects in this image",
-        },
-        {
-          type: "image_url",
-          image_url: { url: "" },
-        },
-      ],
-    },
-  ],
+  messages: [{
+    role: "user",
+    content: [
+      { type: "text", text: "Describe the objects in this image" },
+      { type: "image_url", image_url: { url: "" } },
+    ],
+  }],
   max_tokens: 200,
 };
 
@@ -63,10 +55,10 @@ function draw() {
 function mousePressed() {
   mCamera.loadPixels();
   const camData = mCamera.canvas.toDataURL();
-  console.log("base64 data:", camData.slice(0, 64));
+  console.log("--data--: ", camData.slice(0, 64));
 
-  // for drawing captured image
-  loadImage(camData, (newImage) => (mImg = newImage));
+  // captured image
+  mImg = loadImage(camData);
 
   // reqBody["messages"][0]["content"][1]["image_url"]["url"] = TEST_URL;
   reqBody["messages"][0]["content"][1]["image_url"]["url"] = camData;
@@ -79,7 +71,6 @@ function mousePressed() {
     if (response.choices && response.choices[0]) {
       const msg = response.choices[0]["message"];
       console.log(msg);
-      console.log(msg["content"]);
       mDescription = msg["content"];
     }
   });
