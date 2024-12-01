@@ -33,7 +33,7 @@ function setup() {
   const camWidth = int(width / 2);
   const camHeight = int((0.75 * width) / 2);
   textAlign(LEFT, TOP);
-  textSize(32);
+  textSize(int(0.04 * height));
   fill(255);
   noStroke();
 
@@ -55,7 +55,7 @@ function draw() {
 function mousePressed() {
   mCamera.loadPixels();
   const camData = mCamera.canvas.toDataURL();
-  console.log("--data--: ", camData.slice(0, 64));
+  console.log("data url:", camData.slice(0, 64));
 
   // captured image
   mImg = loadImage(camData);
